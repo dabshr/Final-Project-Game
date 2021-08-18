@@ -1,9 +1,9 @@
 
 import pygame
 from pygame.locals import *
-from pygame import mixer
 import random
 import os
+
 
 pygame.init()
 
@@ -17,16 +17,16 @@ pygame.mixer.init()
 pygame.mixer.music.load('Assets/background.music.mp3')
 pygame.mixer.music.play(loops=-1)
 
-
+#for space
 clock=pygame.time.Clock()	
 
-#define font
+#define fontstyle and font size
 font = pygame.font.SysFont("Times New Roman", 20, bold = True)
 font2 = pygame.font.SysFont("Times New Roman", 30, bold = True)
 
 
 #setup a rectangle for "Play Again" Option
-again_rect = Rect(screen_width // 2 - 80, screen_height // 2, 160, 50)
+#Playagain_rect = Rect(screen_width // 2 - 80, screen_height // 2, 160, 50)
 
 #define snake variables
 snake_pos = [[int(screen_width / 2), int(screen_height / 2)]]
@@ -47,14 +47,14 @@ clicked = False
 score = 0
 
 
-#define colors
-# bg = (255, 200, 150)
-BG = pygame.transform.scale(pygame.image.load(os.path.join("assets", "tanah.jpg")), (screen_width, screen_height))
+
+background = pygame.transform.scale(pygame.image.load(os.path.join("assets", "tanah.jpg")), (screen_width, screen_height))
+#define color of snake and food 
 body_inner = (255, 255, 0)
 body_outer = (0, 0, 0)
 food_col = (255, 255, 0)
 
-
+#define colors
 blue = (0, 0, 255)
 red = (255, 0, 0)
 firebrick1 = (255,48,48)
@@ -64,7 +64,7 @@ chocolate = (210,105,30)
 black = (0, 0, 0)
 
 def draw_screen():
-	screen.blit(BG, (0,0))
+	screen.blit(background, (0,0))
 
 def draw_score():
 	score_txt = 'Score: ' + str(score)
@@ -89,29 +89,23 @@ def check_game_over(game_over):
 def draw_game_over():
 	over_text = "Game Over!"
 	over_img = font.render(over_text, True, red)
-	#pygame.draw.rect(screen, black, (screen_width // 2 - 80, screen_height // 2 - 70, 160, 50))
-	#screen.blit(over_img, (screen_width // 2 - 50, screen_height // 2 - 50))
 	screen.blit(over_img, (250,250))
 
 	again_text = 'Play Again?'
 	again_img = font.render(again_text, True, ghostwhite1)
-	#pygame.draw.rect(screen, chocolate, again_rect)
-	# screen.blit(again_img, (screen_width // 2 - 50, screen_height // 2 + 10))
 	screen.blit(again_img, (250,300))
 	pygame.mixer.music.pause()
 	pygame.mixer.music.play()
 	
 
-
-
 def pause():
 	loop = 1
-	line1 = font.render("PAUSED", True, ghostwhite1)
+	Pause = font.render("PAUSED", True, ghostwhite1)
 	pygame.draw.rect(screen, black, (screen_width // 2 - 80, screen_height // 2 - 60, 160, 50))
-	screen.blit(line1,(screen_width // 2 - 40, screen_height // 2 - 50))
-	line2 = font.render("Press to continue", True, ghostwhite1)
-	pygame.draw.rect(screen, chocolate, again_rect)
-	screen.blit(line2, (screen_width // 2 - 70, screen_height // 2 + 10))
+	screen.blit(Pause,(screen_width // 2 - 40, screen_height // 2 - 50))
+	Continue = font.render("Press to continue", True, ghostwhite1)
+	pygame.draw.rect(screen, chocolate, (screen_width // 2 - 80, screen_height // 2, 160, 50))
+	screen.blit(Continue, (screen_width // 2 - 70, screen_height // 2 + 10))
 
 	while loop:
 		for event in pygame.event.get():
@@ -127,7 +121,7 @@ def pause():
 		clock.tick(60)
 
 
-
+#Game Running 
 run = True
 while run:
 
@@ -148,9 +142,6 @@ while run:
 				direction  = 4
 			if event.key == pygame.K_SPACE:
 				pause()
-			# if event.key == pygame.K_RETURN:
-			# 	pygame.mixer.music.unpause()
-			# 	pause(False)
 		
 	#create food
 	if new_food == True:
